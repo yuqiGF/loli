@@ -1,8 +1,8 @@
 spring:
   application:
     name: SuperAgent
-  profiles:
-    active: local
+  config:
+    import: optional:application-local.yml
 server:
   port: 8123
   servlet:
