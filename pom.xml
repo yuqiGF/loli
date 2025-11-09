@@ -69,6 +69,19 @@
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>4.4.0</version>
         </dependency>
+
+<!--        支持json结构化输出的依赖-->
+        <dependency>
+            <groupId>com.github.victools</groupId>
+            <artifactId>jsonschema-generator</artifactId>
+            <version>4.37.0</version>
+        </dependency>
+<!--        支持文件会话记忆持久化，序列化输出依赖-->
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+            <version>5.6.2</version>
+        </dependency>
 <!--        阿里云灵积大模型服务-->
         <dependency>
             <groupId>com.alibaba</groupId>

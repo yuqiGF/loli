@@ -11,8 +11,10 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class AnimeMasterTest {
+    //引入测试类
     @Resource
     private AnimeMaster animeMaster;
+
     @Test
     void doChat() {
         String chatId = UUID.randomUUID().toString();
@@ -52,5 +54,16 @@ class AnimeMasterTest {
                 count ++;
             }
         }
+    }
+
+    /**
+     * 测试结构化输出
+     */
+    @Test
+    void doChatWithReport() {
+        String chatId = "1";
+        String message = "你好，我叫宇崎崎，我喜欢看一些可爱的动画";
+        AnimeMaster.AnimeReport animeReport = animeMaster.doChatWithReport(message, chatId);
+        Assertions.assertNotNull(animeReport); //非空断言
     }
 }

@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 
 /**
  * 通用 Re2 重读 Advisor（兼容阿里版 spring-ai 1.0.0.2）
+ * 增强推理能力   但是更消耗token，成本变高
  */
 @Component
 public class ReReadingAdvisor implements CallAdvisor {
