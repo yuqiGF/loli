@@ -1,8 +1,11 @@
 package com.yuqiqi.superagent.app;
 
+import com.yuqiqi.superagent.advisor.MyLoggerAdvisor;
+import com.yuqiqi.superagent.advisor.ReReadingAdvisor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
@@ -47,11 +50,14 @@ public class AnimeMaster {
         MessageWindowChatMemory chatMemory = MessageWindowChatMemory.builder().build();
         //初始化 基于内存的会话记忆 有问题⭐
 //        ChatMemory chatMemory = new ChatMemory();
-        //创建对话客户端
+        //⭐创建对话客户端
         chatClient = ChatClient.builder(dashScopeChatModel)
                 .defaultSystem(SYSTEM_PROMPT) //系统提示词
                 .defaultAdvisors(
-                        MessageChatMemoryAdvisor.builder(chatMemory).build()
+                        MessageChatMemoryAdvisor.builder(chatMemory).build(),
+//                        new SimpleLoggerAdvisor(),
+                        new MyLoggerAdvisor(),  //⭐自定义默认的日志拦截级别
+                        new ReReadingAdvisor()  //⭐自定义的重读拦截器
                 ) //默认拦截器，对所有请求生效
                 .build();
 //        //单次调用

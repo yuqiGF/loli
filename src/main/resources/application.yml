@@ -24,3 +24,7 @@ knife4j:
   enable: true
   setting:
     language: zh_cn
+# 自定义Spring ai默认的拦截级别
+logging:
+  level:
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: debug
