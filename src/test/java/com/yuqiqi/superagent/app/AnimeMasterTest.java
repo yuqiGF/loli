@@ -19,12 +19,12 @@ class AnimeMasterTest {
     void doChat() {
         String chatId = UUID.randomUUID().toString();
         //第一轮
-        String message = "你好 我叫宇崎崎，我刚看完幸运星，它超级好看";
+        String message = "你好 我的主人叫宇崎崎，我刚看完幸运星，它超级好看";
         String answer = animeMaster.doChat(message, chatId);
         Assertions.assertNotNull(answer);
         //第二轮
         String message2 = "我刚刚看过什么？";
-        answer = animeMaster.doChat(message, chatId);
+        answer = animeMaster.doChat(message2, chatId);
         Assertions.assertNotNull(answer);
 
     }

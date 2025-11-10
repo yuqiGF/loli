@@ -1,6 +1,7 @@
 package com.yuqiqi.superagent.app;
 
 import com.yuqiqi.superagent.advisor.MyLoggerAdvisor;
+import com.yuqiqi.superagent.advisor.PermissionAdvisor;
 import com.yuqiqi.superagent.advisor.ReReadingAdvisor;
 import com.yuqiqi.superagent.chatMemorty.FileBasedChatMemory;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +66,7 @@ public class AnimeMaster {
                 .defaultAdvisors(
                         MessageChatMemoryAdvisor.builder(chatMemory).build(),
 //                        new SimpleLoggerAdvisor(),
+                        new PermissionAdvisor(), //⭐自定义敏感词拦截器
                         new MyLoggerAdvisor(),  //⭐自定义默认的日志拦截级别
                         new ReReadingAdvisor()  //⭐自定义的重读拦截器
                 ) //默认拦截器，对所有请求生效

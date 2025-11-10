@@ -37,7 +37,7 @@ public class ReReadingAdvisor implements CallAdvisor {
 		String origion = chatClientRequest.prompt().getUserMessage().getText();
 		//拓展提示词⭐augmentUserMessage方法
 		Prompt prompt = chatClientRequest.prompt().augmentUserMessage(origion + "请重读一下用户的请求：" + origion);
-		//⭐构建新的请求
+		//⭐构建新的请求   mutate 改变
 		ChatClientRequest newRequest = chatClientRequest.mutate()
 				.prompt(prompt)
 				.build();
