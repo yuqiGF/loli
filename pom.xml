@@ -96,6 +96,13 @@
             <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
         </dependency>
 
+<!--        快速将markdown文件导入java 从maven中央仓库获取-->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-markdown-document-reader</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
 <!--        langchain4j-->
         <dependency>
             <groupId>dev.langchain4j</groupId>
