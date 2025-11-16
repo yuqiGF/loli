@@ -3,11 +3,14 @@ package com.yuqiqi.superagent.app;
 import com.yuqiqi.superagent.advisor.MyLoggerAdvisor;
 import com.yuqiqi.superagent.advisor.PermissionAdvisor;
 import com.yuqiqi.superagent.advisor.ReReadingAdvisor;
+
 import com.yuqiqi.superagent.chatMemorty.FileBasedChatMemory;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.memory.InMemoryChatMemoryRepository;
@@ -15,6 +18,7 @@ import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.MessageAggregator;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -71,10 +75,6 @@ public class AnimeMaster {
                         new ReReadingAdvisor()  //⭐自定义的重读拦截器
                 ) //默认拦截器，对所有请求生效
                 .build();
-//        //单次调用
-//        chatClient.prompt()
-//                .system()
-//                .advisors()
     }
 
     //创建方法调用
@@ -122,5 +122,31 @@ public class AnimeMaster {
         log.info("AnimeReport:{}",animeReport);
 
         return animeReport;
+    }
+
+    @Resource  //注入自己写的向量数据库
+    private VectorStore animeMasterVectorStore;
+
+    /**
+     * 和RAG知识库对话
+     * @param message
+     * @param id
+     * @return
+     */
+    public String doChatWithRAG(String message, String id){
+        ChatResponse chatResponse = chatClient
+                .prompt()
+                .user(message)
+                .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, id) //官方文档中的对话隔离写法
+                        .param(ChatMemory.DEFAULT_CONVERSATION_ID, 10))
+                //开启日志，便于观察效果
+                .advisors(new MyLoggerAdvisor())
+                //应用RAG（TMD有坑，得导advisor包！！！⭐）
+                .advisors(new QuestionAnswerAdvisor(animeMasterVectorStore))
+                .call()
+                .chatResponse();
+        String content = chatResponse.getResult().getOutput().getText();
+        log.info("content:{}",content);
+        return content;
     }
 }

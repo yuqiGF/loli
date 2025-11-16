@@ -66,4 +66,12 @@ class AnimeMasterTest {
         AnimeMaster.AnimeReport animeReport = animeMaster.doChatWithReport(message, chatId);
         Assertions.assertNotNull(animeReport); //非空断言
     }
+
+    @Test
+    void doChatWithRAG() {
+        String id = UUID.randomUUID().toString();
+        String message = "你好，我叫宇崎崎，我喜欢看一些可爱的动画";
+        String RAGResult = animeMaster.doChatWithRAG(message, id);
+        Assertions.assertNotNull(RAGResult);
+    }
 }
