@@ -15,7 +15,7 @@ import java.util.List;
 //⭐RAG中的文档读取-> ETL 抽取 转换 加载
 
 /**
- * 动漫大师文档加载器
+ * 动漫大师文档加载器  （基于本地）
  */
 @Component
 @Slf4j
