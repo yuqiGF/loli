@@ -15,6 +15,5 @@ class AnimeMasterDocumentReaderTest {
     @Test
     void loadMarkdowns() {
         animeMasterDocumentReader.loadMarkdowns();
-
     }
 }
