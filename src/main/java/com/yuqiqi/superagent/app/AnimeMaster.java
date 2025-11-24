@@ -6,6 +6,7 @@ import com.yuqiqi.superagent.advisor.ReReadingAdvisor;
 
 import com.yuqiqi.superagent.chatMemorty.FileBasedChatMemory;
 import com.yuqiqi.superagent.rag.AnimeMasterCloudAdvisorConfig;
+import com.yuqiqi.superagent.rag.QueryRewriter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -156,6 +157,17 @@ public class AnimeMaster {
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
         log.info("content:{}",content);
+        return content;
+    }
+
+    @Resource
+    private QueryRewriter queryRewriter;
+    public String doChatWithQueryRewriter(String message,String chatId){
+        String rewrittenMessage = queryRewriter.doQueryRewrite(message);
+        String content = chatClient.prompt()
+                .user(message)
+                .call()
+                .content();
         return content;
     }
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.validation.constraints.AssertTrue;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -73,5 +74,13 @@ class AnimeMasterTest {
         String message = "你好，我叫宇崎崎，我喜欢看一些可爱的动画";
         String RAGResult = animeMaster.doChatWithRAG(message, id);
         Assertions.assertNotNull(RAGResult);
+    }
+
+    @Test
+    void doChatWithQueryRewriter() {
+        String id = UUID.randomUUID().toString();
+        String message = "你好，我叫宇崎崎，我喜欢看一些可爱的动画";
+        String result = animeMaster.doChatWithQueryRewriter(message, id);
+        Assertions.assertNotNull(result);
     }
 }
