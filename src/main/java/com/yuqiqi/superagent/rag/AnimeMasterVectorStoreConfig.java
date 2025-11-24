@@ -19,6 +19,9 @@ public class AnimeMasterVectorStoreConfig {
     @Resource
     private AnimeMasterDocumentReader animeMasterDocumentReader;
 
+    @Resource
+    private MyKeywordEnricher myKeywordEnricher;
+
     //注入springAi的embeddingModel   自动装载
     @Bean
     VectorStore animeMasterVectorStore(EmbeddingModel dashscopeEmbeddingModel){
@@ -27,8 +30,13 @@ public class AnimeMasterVectorStoreConfig {
 
         //获取需要添加的document对象
         List<Document> documentList = animeMasterDocumentReader.loadMarkdowns();
+        //自主切分文档 （按照token切分 按照官方文档的写法，返回document列表）
+
+        //自定义ai元信息增强器 自动补充关键词元信息
+        List<Document> documents = myKeywordEnricher.enrichDocument(documentList);
+
         //添加
-        simpleVectorStore.add(documentList);
+        simpleVectorStore.add(documents);
         //返回
         return simpleVectorStore;
     }

@@ -50,6 +50,7 @@ public class AnimeMasterDocumentReader {
                         .withIncludeCodeBlock(false)
                         .withIncludeBlockquote(false)
                         .withAdditionalMetadata("filename", filename)  //给每个文档加一些元信息
+                        //这里可以直接提取文档中的一部分内容作为元信息补充⭐
                         .build();
                 //创建加载器
                 MarkdownDocumentReader markdownDocumentReader = new MarkdownDocumentReader(resource, config);
