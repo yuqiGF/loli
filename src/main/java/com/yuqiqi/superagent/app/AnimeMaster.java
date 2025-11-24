@@ -6,6 +6,7 @@ import com.yuqiqi.superagent.advisor.ReReadingAdvisor;
 
 import com.yuqiqi.superagent.chatMemorty.FileBasedChatMemory;
 import com.yuqiqi.superagent.rag.AnimeMasterCloudAdvisorConfig;
+import com.yuqiqi.superagent.rag.AnimeMasterRagCustomAdvisorFactory;
 import com.yuqiqi.superagent.rag.QueryRewriter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -169,5 +170,17 @@ public class AnimeMaster {
                 .call()
                 .content();
         return content;
+    }
+
+    /**
+     * 测试自定义检索增强顾问
+     */
+    public String doChatWithMyRagAdvisor(String message,String chatId){
+        String result = chatClient.prompt()
+                .user(message)
+                .advisors(AnimeMasterRagCustomAdvisorFactory.createAnimeMasterRagCustomAdvisor(animeMasterVectorStore, "吃饭"))
+                .call()
+                .content();
+        return result;
     }
 }

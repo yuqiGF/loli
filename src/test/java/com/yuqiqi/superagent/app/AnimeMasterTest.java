@@ -83,4 +83,12 @@ class AnimeMasterTest {
         String result = animeMaster.doChatWithQueryRewriter(message, id);
         Assertions.assertNotNull(result);
     }
+
+    @Test
+    void doChatWithMyRagAdvisor() {
+        String id = UUID.randomUUID().toString();
+        String message = "你好，我叫宇崎崎，我喜欢看一些可爱的动画";
+        String result = animeMaster.doChatWithMyRagAdvisor(message, id);
+        Assertions.assertNotNull(result);
+    }
 }
