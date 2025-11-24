@@ -13,7 +13,7 @@ import org.springframework.ai.vectorstore.filter.FilterExpressionBuilder;
 public class AnimeMasterRagCustomAdvisorFactory {
 
     /**
-     * 创建自定义的文本检索增强顾问   ⭐检索增强顾问  更加灵活   在不知道的时候会回答不知道
+     * 创建自定义的文本检索增强顾问 可以设置过滤   ⭐检索增强顾问  更加灵活   在不知道的时候会回答不知道
      *
      * @param vectorStore 向量存储
      * @param status 元数据中自定义的状态信息
@@ -33,7 +33,7 @@ public class AnimeMasterRagCustomAdvisorFactory {
 
         return RetrievalAugmentationAdvisor.builder()
                 .documentRetriever(documentRetriever)   //文档检索器
-//                .queryAugmenter()   //查询增强器
+                .queryAugmenter(AnimeMasterContextualQueryAugmenterFactory.createInstance())   //查询增强器  检索到的文档为空的时候的措施
                 .build();
     }
 }

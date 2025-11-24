@@ -87,8 +87,9 @@ class AnimeMasterTest {
     @Test
     void doChatWithMyRagAdvisor() {
         String id = UUID.randomUUID().toString();
-        String message = "你好，我叫宇崎崎，我喜欢看一些可爱的动画";
+        String message = "你好，我喜欢看一些可爱的动画";
         String result = animeMaster.doChatWithMyRagAdvisor(message, id);
+        System.out.println(result);
         Assertions.assertNotNull(result);
     }
 }
