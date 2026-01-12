@@ -25,6 +25,7 @@ import org.springframework.ai.chat.model.MessageAggregator;
 import org.springframework.ai.vectorstore.VectorStore;
 
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -167,5 +168,22 @@ public class AnimeMaster {
                 .call()
                 .content();
         return result;
+    }
+
+    /**
+     * ⭐流式对话方法
+     * @param message 用户消息
+     * @param id 用户ID
+     * @return Flux<String> 流式字符流
+     */
+    public Flux<String> doStreamChat(String message, String id) {
+        return chatClient
+                .prompt()
+                .user(message)
+                // 保持和 doChat 一样的 Advisor 配置（记忆、参数等）
+                .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, id)
+                        .param(ChatMemory.DEFAULT_CONVERSATION_ID, 10))
+                .stream() // ⭐这里使用 stream() 而不是 call()
+                .content(); // ⭐直接获取内容流 (Flux<String>)
     }
 }
